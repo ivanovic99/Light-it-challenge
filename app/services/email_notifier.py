@@ -37,9 +37,10 @@ class EmailNotifier(Notifier):
             async with SMTP(
                 hostname=settings.EMAIL_HOST,
                 port=settings.EMAIL_PORT,
-                use_tls=True,
                 username=settings.EMAIL_USER,
-                password=settings.EMAIL_PASSWORD
+                password=settings.EMAIL_PASSWORD,
+                use_tls=False,  # Start with plain connection
+                start_tls=True,  # Auto-upgrade to TLS
             ) as smtp:
                 await smtp.send_message(message)
                 
