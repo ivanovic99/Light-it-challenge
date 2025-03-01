@@ -1,4 +1,4 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
@@ -10,9 +10,9 @@ class Settings(BaseSettings):
     EMAIL_USER: str
     EMAIL_PASSWORD: str
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
-
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": True
+    }
 
 settings = Settings()
