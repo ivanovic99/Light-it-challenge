@@ -40,7 +40,7 @@ docker-compose up --build
 And to stop the application:
 
 ```bash
-docker-compose down
+docker-compose down -v
 ```
 
 ## API Documentation
@@ -160,7 +160,7 @@ docker-compose run -e TEST_MODE=true api pytest test/unit/test_validators.py
 To remove test containers:
 
 ```bash
-docker-compose down
+docker-compose down -v
 ```
 
 ## License
