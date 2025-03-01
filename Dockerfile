@@ -9,4 +9,6 @@ COPY ./app /app
 COPY ./alembic /alembic
 COPY ./alembic.ini /alembic.ini
 
+ENV PYTHONPATH=/
+
 CMD bash -c "cd / && alembic upgrade head && cd /app && uvicorn main:app --host 0.0.0.0 --port 8080 --reload"
