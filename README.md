@@ -37,7 +37,7 @@ docker-compose up --build
 # Application will be available at http://localhost:8080
 ```
 
-And to stop the application:
+And to stop the application (and remove volumes "-v"):
 
 ```bash
 docker-compose down -v
@@ -157,7 +157,7 @@ docker-compose run -e TEST_MODE=true api pytest -v
 docker-compose run -e TEST_MODE=true api pytest test/unit/test_validators.py
 ```
 
-To remove test containers:
+To remove test containers (and remove volumes "-v"):
 
 ```bash
 docker-compose down -v
