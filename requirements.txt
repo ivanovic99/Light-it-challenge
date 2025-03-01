@@ -6,9 +6,11 @@ uvicorn[standard]==0.34.0
 sqlalchemy==2.0.37
 asyncmy==0.2.9
 alembic==1.14.1
+cryptography==42.0.0
 
 # Validation and Settings
-pydantic[email]==2.4.2
+pydantic[email]==2.7.0
+pydantic-settings==2.7.1
 python-multipart==0.0.6
 email-validator==2.1.0.post1
 python-dotenv==1.0.0
