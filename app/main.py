@@ -1,16 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import logging
 
 from app.api.endpoints import router as api_router
+from app.utils.logger import setup_logging
 
-# Create FastAPI application
+setup_logging(logging.INFO)
+
 app = FastAPI(
     title="Patient Registration API",
     description="API for registering patients and uploading their documents",
     version="1.0.0"
 )
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,10 +21,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include API router
 app.include_router(api_router, prefix="/api")
 
-# Root endpoint
 @app.get("/")
 async def root():
     return {"message": "Welcome to Patient Registration API"}
+
+logging.info("Patient Registration API started")
+logging.debug("Debug logging enabled")
