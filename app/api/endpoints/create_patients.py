@@ -1,11 +1,12 @@
-from fastapi import APIRouter, Depends, UploadFile, File, status, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.base import get_db
 from app.models.patient import Patient
-from app.schemas.patient import PatientCreate, PatientResponse
+from app.schemas.patient import PatientResponse, PatientFormData
 from app.services.notifications import NotificationFactory
 from app.services.file_handling import FileProcessingService
+from app.utils.form import get_patient_form
 
 router = APIRouter(
     prefix="/patients",
@@ -18,24 +19,21 @@ file_service = FileProcessingService()
 async def create_patient(
     *,
     background_tasks: BackgroundTasks,
-    patient_data: PatientCreate,
-    document_photo: UploadFile = File(...),
+    form_data: PatientFormData = Depends(get_patient_form),
     db: AsyncSession = Depends(get_db)
 ):
     """
     Create a new patient with document photo.
+    All form data is pre-validated through dependencies.
     """
-    # Validate and process document photo
-    document_content = await file_service.validate_document(document_photo)
-    
-    # Create patient object
+    # Create patient object using validated data
     patient = Patient(
-        name=patient_data.name,
-        email=patient_data.email,
-        phone_number=patient_data.phone_number,
-        document_photo=document_content,
-        document_photo_filename=document_photo.filename,
-        document_photo_content_type=document_photo.content_type
+        name=form_data.patient_data.name,
+        email=form_data.patient_data.email,
+        phone_number=form_data.patient_data.phone_number,
+        document_photo=form_data.document_content,
+        document_photo_filename=form_data.document_filename,
+        document_photo_content_type=form_data.document_content_type
     )
     
     # Save to database

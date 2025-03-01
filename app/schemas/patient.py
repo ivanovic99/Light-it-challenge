@@ -1,6 +1,5 @@
 import uuid
 from datetime import datetime
-from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field, field_validator
 import re
@@ -16,12 +15,11 @@ class PatientBase(BaseModel):
         """Validate phone number format"""
         pattern = r"^\+?[0-9\s\-\(\)]{8,20}$"
         if not re.match(pattern, value):
-            raise ValueError("Invalid phone number format")
+            raise ValueError("Invalid phone number format. Examples: +1234567890, 123-456-7890, (123) 456-7890")
         return value
 
 class PatientCreate(PatientBase):
     """Schema for creating a new patient - used for request validation"""
-    # Document photo is being handled separately via UploadFile
     pass
 
 class PatientResponse(PatientBase):
@@ -35,3 +33,13 @@ class PatientResponse(PatientBase):
     model_config = {
         "from_attributes": True
     }
+
+class PatientFormData(BaseModel):
+    """Combined form data with both patient details and document"""
+    patient_data: PatientCreate
+    document_content: bytes
+    document_filename: str
+    document_content_type: str
+    
+    class Config:
+        arbitrary_types_allowed = True
