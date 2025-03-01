@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict
 import re
 
 class PatientBase(BaseModel):
@@ -34,6 +34,7 @@ class PatientResponse(PatientBase):
         "from_attributes": True
     }
 
+
 class PatientFormData(BaseModel):
     """Combined form data with both patient details and document"""
     patient_data: PatientCreate
@@ -41,5 +42,4 @@ class PatientFormData(BaseModel):
     document_filename: str
     document_content_type: str
     
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
