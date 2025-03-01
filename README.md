@@ -23,8 +23,8 @@ Create a .env file in the project root with the following variables:
 DATABASE_URL=mysql+asyncmy://user:password@db:3306/patient_db
 EMAIL_HOST=sandbox.smtp.mailtrap.io
 EMAIL_PORT=2525
-EMAIL_USER=your_mailtrap_username
-EMAIL_PASSWORD=your_mailtrap_password
+EMAIL_USER=eb23e02d772440
+EMAIL_PASSWORD=278e526e98fee1
 ```
 
 ### Running the Application
