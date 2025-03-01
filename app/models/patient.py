@@ -1,7 +1,7 @@
 import uuid
 
-from sqlalchemy import Column, DateTime, String, LargeBinary, func, Index
-from sqlalchemy.dialects.mysql import BINARY
+from sqlalchemy import Column, DateTime, String, func, Index
+from sqlalchemy.dialects.mysql import BINARY, MEDIUMBLOB
 
 from app.db.base import Base
 
@@ -13,7 +13,7 @@ class Patient(Base):
     email = Column(String(255), nullable=False)
     phone_number = Column(String(20), nullable=False)
     
-    document_photo = Column(LargeBinary, nullable=False)
+    document_photo = Column(MEDIUMBLOB, nullable=False)
     document_photo_filename = Column(String(255), nullable=False)
     document_photo_content_type = Column(String(100), nullable=False)
     
